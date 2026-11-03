@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 
+  =============================================================================
+  GLOBAL IT KNOWLEDGE HUB — FRONTEND USER INTERFACE (index.html)
+  =============================================================================
+  This single-page application connects directly to the FastAPI backend at /api/chat.
+  It provides:
+  1. Company filter tabs (All, Microsoft, Google, AWS, IBM, Oracle, etc.)
+  2. Category dropdown filter
+  3. Grounded AI answer card with numbered official source citations
+  4. Live Azure Cloud / Local Engine health status pill
+
+  ✏️ HOW TO MODIFY THIS FILE:
+  - To change page title or meta descriptions: Edit the <title> and <meta> tags below.
+  - To change the hero headlines or subheaders: Modify the <h1> and <p> in <section class="hero">.
+  - To modify the quick-question prompts: Look for the <div class="example-pills"> section.
+  =============================================================================
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global IT Knowledge Hub — Official Sources & AI Answers</title>
+  <meta name="description" content="One search across Microsoft, Google, AWS, IBM, Oracle, TCS, Infosys and others using verified official publications.">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20width=%22100%22%20height=%22100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+</head>
+<body>
+  <main class="shell">
+    <!-- Header with Brand and Status Indicator -->
+    <header class="header">
+      <div class="header-left">
+        <div class="brand">GLOBAL<span>IT</span></div>
+        <div class="tagline">Knowledge Hub</div>
+      </div>
+      <div class="header-right">
+        <!-- 💡 Status pill updates dynamically from /api/health -->
+        <div id="engine-status" class="status-pill">
+          <span class="status-dot"></span>
+          <span id="engine-text">Checking status...</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="eyebrow">OFFICIAL IT COMPANY KNOWLEDGE</div>
+      <h1>One search.<br />The entire IT ecosystem.</h1>
+      <p>
+        Explore official company documentation, policies, brochures, products,
+        and technical resources grounded directly in verified company publications.
+      </p>
+
+      <!-- ✏️ MODIFY HERE: Quick Example Questions for Fast Testing -->
+      <div class="example-chips">
+        <span class="chips-label">Try an example:</span>
+        <button type="button" class="chip" data-company="Microsoft" data-question="What is Microsoft's policy for customer data used by Azure AI?">
+          Microsoft · Azure AI Data Privacy
+        </button>
+        <button type="button" class="chip" data-company="AWS" data-question="What does the AWS Privacy Notice cover and what are its boundaries?">
+          AWS · Privacy Notice Scope
+        </button>
+        <button type="button" class="chip" data-company="Google" data-question="Where can I find Google Cloud product terms and policies?">
+          Google Cloud · Product Terms
+        </button>
+        <button type="button" class="chip" data-company="all" data-question="What privacy commitments do Microsoft, AWS and Google publish for enterprise AI?">
+          All Companies · AI Privacy Commitments
+        </button>
+      </div>
+    </section>
+
+    <!-- Company Tabs Navigation -->
+    <!-- ✏️ Dynamically rendered from /api/companies (or falls back to defaults) -->
+    <nav class="company-tabs" id="company-tabs-container" aria-label="Company Filter Tabs">
+      <!-- Tabs will be rendered by app.js -->
+    </nav>
+
+    <!-- Search & Question Input Panel -->
+    <section class="search-panel">
+      <form id="search-form">
+        <div class="search-header-row">
+          <label for="question-input">What would you like to know?</label>
+          <span id="char-counter" class="char-counter">0 / 1,500</span>
+        </div>
+        <textarea
+          id="question-input"
+          name="question"
+          rows="4"
+          maxlength="1500"
+          placeholder="Example: Explain Microsoft's publicly documented Azure AI data privacy policy..."
+          required
+        ></textarea>
+
+        <div class="controls">
+          <div class="select-wrapper">
+            <label for="category-select" class="sr-only">Category</label>
+            <select id="category-select" name="category">
+              <!-- Options rendered dynamically by app.js -->
+              <option value="All Categories">All Categories</option>
+            </select>
+          </div>
+
+          <button type="submit" id="ask-button" class="ask-button">
+            <span class="btn-text">Search & Ask AI →</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Error Banner -->
+    <div id="error-box" class="error-box hidden" role="alert"></div>
+
+    <!-- AI Grounded Answer & Source Documents Panel -->
+    <section id="answer-panel" class="answer-panel hidden">
+      <div class="answer-header">
+        <div>
+          <div class="eyebrow">KNOWLEDGE HUB RESPONSE</div>
+          <h2>Answer</h2>
+        </div>
+        <button type="button" id="copy-btn" class="secondary-btn" title="Copy answer to clipboard">
+          📋 Copy Answer
+        </button>
+      </div>
+
+      <div id="answer-text" class="answer-text"></div>
+
+      <!-- Source Documents Citations -->
+      <div class="sources-container">
+        <h3>Official source documents</h3>
+        <p class="sources-sub">The AI's answer is grounded exclusively in these public documents:</p>
+        <div id="sources-list" class="sources-list">
+          <!-- Source cards injected dynamically here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>
+        Answers are generated from the indexed public-source library.
+        Always verify important terms against the original company document.
+      </p>
+      <div class="footer-meta">
+        <span>Global IT Knowledge Hub · Python Edition</span>
+        <span>•</span>
+        <a href="https://learn.microsoft.com/en-us/azure/search/" target="_blank" rel="noreferrer">Azure AI Search Docs</a>
+        <span>•</span>
+        <a href="https://ai.azure.com/" target="_blank" rel="noreferrer">Azure AI Foundry</a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
